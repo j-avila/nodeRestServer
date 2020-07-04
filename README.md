@@ -1,4 +1,4 @@
-## hbs templates
+## Node REST server
 
 run
 

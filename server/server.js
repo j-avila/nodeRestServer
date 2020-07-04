@@ -8,10 +8,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get("/", function (req, res) {
-	res.json("Hello World")
+app.get("/users", function (req, res) {
+	res.json("Hello users")
 })
-app.post("/", function (req, res) {
+app.post("/user", function (req, res) {
 	const body = req.body
 	const headers = req.headers
 
@@ -31,7 +31,7 @@ app.put("/user/:id", function (req, res) {
 		user: id,
 	})
 })
-app.delete("/", function (req, res) {
+app.delete("/user", function (req, res) {
 	res.json("Hello delete")
 })
 

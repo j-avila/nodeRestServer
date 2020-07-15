@@ -3,8 +3,9 @@ const app = express()
 const bcrypt = require("bcrypt")
 const _ = require("underscore")
 const User = require("../models/schemas")
+const { tokenAuth } = require("../middlewares/auth")
 
-app.get("/users", function (req, res) {
+app.get("/users", tokenAuth, (req, res) => {
 	const from = Number(req.query.from) || 0
 	const limit = Number(req.query.limit) || 0
 
@@ -13,7 +14,8 @@ app.get("/users", function (req, res) {
 		.limit(limit)
 		.exec((err, users) => {
 			err && res.status(400).json({ ok: false, err })
-			User.count({ state: true }, (err, count) => {
+
+			User.countDocuments({ state: true }, (err, count) => {
 				res.json({
 					ok: true,
 					users,

@@ -7,7 +7,7 @@ process.env.PORT = process.env.PORT || 3000
 process.env.NODE_ENV = process.env.NODE_ENV || "dev"
 
 // expiring token
-process.env.TOKEN_EXPIRES = 60 * 60 * 24 * 30
+process.env.TOKEN_EXPIRES = 60 * 60 * 60 * 30
 
 // seeds
 let usrSEED

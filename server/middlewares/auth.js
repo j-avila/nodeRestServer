@@ -14,6 +14,20 @@ const tokenAuth = (req, res, next) => {
 	})
 }
 
+const roleAuth = (req, res, next) => {
+	const user = req.user
+
+	if (user.role === "ADMIN_ROLE") {
+		next()
+	} else {
+		return res.json({
+			ok: false,
+			message: "the user is not admin",
+		})
+	}
+}
+
 module.exports = {
 	tokenAuth,
+	roleAuth,
 }

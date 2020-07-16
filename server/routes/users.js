@@ -3,7 +3,7 @@ const app = express()
 const bcrypt = require("bcrypt")
 const _ = require("underscore")
 const User = require("../models/schemas")
-const { tokenAuth } = require("../middlewares/auth")
+const { tokenAuth, roleAuth } = require("../middlewares/auth")
 
 app.get("/users", tokenAuth, (req, res) => {
 	const from = Number(req.query.from) || 0
@@ -25,7 +25,7 @@ app.get("/users", tokenAuth, (req, res) => {
 		})
 })
 
-app.post("/user", function (req, res) {
+app.post("/user", [tokenAuth, roleAuth], function (req, res) {
 	const body = req.body
 	// const headers = req.headers
 
@@ -37,7 +37,9 @@ app.post("/user", function (req, res) {
 	})
 
 	user.save((err, dbRes) => {
-		err && res.status(400).json({ ok: false, err })
+		if (err) {
+			return res.status(400).json({ ok: false, err })
+		}
 
 		res.json({
 			user: dbRes,
@@ -45,12 +47,14 @@ app.post("/user", function (req, res) {
 	})
 })
 
-app.put("/user/:id", function (req, res) {
+app.put("/user/:id", [tokenAuth, roleAuth], function (req, res) {
 	const id = req.params.id
 	const body = _.pick(req.body, ["name", "email", "img", "role", "state"])
 
 	User.findByIdAndUpdate(id, body, { new: true }, (err, dbUser) => {
-		err && res.status(400).json({ ok: false, err })
+		if (err) {
+			return res.status(400).json({ ok: false, err })
+		}
 
 		res.json({
 			ok: true,
@@ -59,7 +63,7 @@ app.put("/user/:id", function (req, res) {
 	})
 })
 
-app.delete("/user/remove/:id", function (req, res) {
+app.delete("/user/remove/:id", [tokenAuth, roleAuth], function (req, res) {
 	const id = req.params.id
 	const body = _.pick(req.body, ["state"])
 
@@ -73,7 +77,7 @@ app.delete("/user/remove/:id", function (req, res) {
 	})
 })
 
-app.delete("/user/:id", function (req, res) {
+app.delete("/user/:id", [tokenAuth, roleAuth], function (req, res) {
 	const id = req.params.id
 
 	User.findByIdAndDelete(id, (err, userDeleted) => {

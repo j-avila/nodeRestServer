@@ -26,3 +26,9 @@ process.env.NODE_ENV === "dev"
 	: (urlDB = process.env.MONGO_URI)
 
 process.env.URLDB = urlDB
+
+// googleid
+
+process.env.CLIENT_ID =
+	process.env.CLIENT_ID ||
+	"274383636599-877ud7tg19b1lvifvabqf0uev40oh40j.apps.googleusercontent.com"

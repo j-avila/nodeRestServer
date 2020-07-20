@@ -36,18 +36,20 @@ app.get("/products/search", (req, res) => {
 	const terms = req.query.name
 	const regex = new RegExp(terms, "i")
 
-	Product.find({ name: regex }, (err, product) => {
-		if (err) {
-			return status.anchor(500).json({
-				ok: false,
-				err,
+	Product.find({ name: regex })
+		.populate("category", "name")
+		.exec((err, product) => {
+			if (err) {
+				return status.anchor(500).json({
+					ok: false,
+					err,
+				})
+			}
+			res.json({
+				ok: true,
+				product,
 			})
-		}
-		res.json({
-			ok: true,
-			product,
 		})
-	})
 })
 
 app.get("/products/:id", (req, res) => {

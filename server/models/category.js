@@ -11,6 +11,10 @@ const categorySchema = new Schema({
 		type: Boolean,
 		default: true,
 	},
+	createdBy: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+	},
 })
 
 categorySchema.methods.toJSON = function () {
@@ -20,4 +24,4 @@ categorySchema.methods.toJSON = function () {
 }
 
 categorySchema.plugin(uniqueValidation, { message: "{PATH} debe ser unico" })
-module.exports = mongoose.model("category", categorySchema)
+module.exports = mongoose.model("Category", categorySchema)

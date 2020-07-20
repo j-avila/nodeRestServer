@@ -2,7 +2,7 @@ const express = require("express")
 const app = express()
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-const User = require("../models/schemas")
+const User = require("../models/user")
 // google auth
 const { OAuth2Client } = require("google-auth-library")
 const client = new OAuth2Client(process.env.CLIENT_ID)

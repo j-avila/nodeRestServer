@@ -16,6 +16,7 @@ app.use(require('./routes/login'))
 app.use(require('./routes/categories'))
 app.use(require('./routes/products'))
 app.use(require('./routes/upload'))
+app.use(require('./routes/images'))
 
 // db connection
 mongoose.connect(
